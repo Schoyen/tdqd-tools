@@ -9,7 +9,7 @@ from tdqd_tools.io_data import return_time_data, write_data
 @click.argument("filename")
 @click.option(
     "--time-stop-laser",
-    default=None,
+    default=0,
     type=float,
     help="Time where laser is turned off",
 )
