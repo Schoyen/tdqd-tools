@@ -1,0 +1,40 @@
+#!/usr/bin/env python
+
+import click
+from tdqd_tools.io_data import return_time_data, write_data
+from tdqd_tools.compare import compare_diff, compare_plot
+
+
+@click.command()
+@click.argument("file_1")
+@click.argument("file_2")
+@click.option(
+    "--label_1", default="file_1", help="Plot label of data in file 1"
+)
+@click.option(
+    "--label_2", default="file_2", help="Plot label of data in file 2"
+)
+@click.option("--out", default="", help="Filename of spectral data to be saved")
+@click.option(
+    "--plot/--no-plot", default=True, help="Whether to plot the data or not"
+)
+@click.option(
+    "--verbose/--quiet",
+    default=True,
+    help="Whether to print differences or not",
+)
+def main(file_1, file_2, label_1, label_2, out, plot, verbose):
+    data_1 = return_time_data(file_1)
+    data_2 = return_time_data(file_2)
+
+    assert len(data_1[:, 0]) == len(data_2[:, 0])
+
+    if verbose:
+        compare_diff(data_1, data_2)
+
+    if plot:
+        compare_plot(data_1, data_2, label_1, label_2)
+
+
+if __name__ == "__main__":
+    main()
