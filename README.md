@@ -34,3 +34,15 @@ If the initial data points need to be filtered out from the Fourier transformati
 get_spec dipole_data.dat --xlim 0 6 --time-stop-laser 5
 ```
 Storing the spectral data (frequency in the first column and intensity in the second) can be done with the optional argument `--out <filename>`. If the extension of `<filename>` is `.npy` the data is stored as a NumPy pickled array.
+
+
+## Comparing two datasets
+Given two datasets named `dipole_data_1.dat` and `dipole_data_2.dat` similar to the set described above, we can compare them to one another by utilizing the script `get_diff`.
+```bash
+get_diff dipole_data_1.dat dipole_data_2.dat --label_1 "Dipole 1" --label_2 "Dipole 2"
+```
+
+See `--help` for more info, i.e.,
+```bash
+get_diff --help
+```
