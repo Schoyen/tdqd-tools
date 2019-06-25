@@ -18,6 +18,7 @@ data = np.c_[time_points[:, np.newaxis], dipole_moment[:, np.newaxis]]
 np.savetxt("dipole_data.dat", data) # For raw-text files
 np.save("dipole_data", data) # For pickled-data
 ```
+Note that the command-line tools accept both NumPy-pickled files and raw-text files.
 
 ## Performing spectral analysis of dipole moment
 To extract the spectral lines from the time-dependent dipole moment stored in the data set above, we can use the command-line tool `get_spec`.
@@ -32,3 +33,4 @@ If the initial data points need to be filtered out from the Fourier transformati
 ```bash
 get_spec dipole_data.dat --xlim 0 6 --time-stop-laser 5
 ```
+Storing the spectral data (frequency in the first column and intensity in the second) can be done with the optional argument `--out <filename>`. If the extension of `<filename>` is `.npy` the data is stored as a NumPy pickled array.
