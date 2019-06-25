@@ -24,7 +24,11 @@ To extract the spectral lines from the time-dependent dipole moment stored in th
 ```bash
 get_spec dipole_data.dat
 ```
-This generates a plot of the spectral lines using Fourier transformation. This is often too wide, so in order to limit the x-axis pass in the optional argument `--xlim x_start x_end` to limit the plot. For example,
+This generates a plot of the spectral lines using Fourier transformation. This is often too wide, so in order to limit the x-axis pass in the optional argument `--xlim <x_start> <x_end>` to limit the plot. For example,
 ```bash
 get_spec dipole_data.dat --xlim 0 6
+```
+If the initial data points need to be filtered out from the Fourier transformation, pass in the optional argument `--time-stop-laser <time>`. An example is shown below to only include points `time_points >= 5`.
+```bash
+get_spec dipole_data.dat --xlim 0 6 --time-stop-laser 5
 ```
