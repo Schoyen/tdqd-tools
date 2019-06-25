@@ -8,9 +8,10 @@ from tdqd_tools.io_data import return_time_data, write_data
 @click.command()
 @click.argument("filename")
 @click.option(
-    "--timestep-stop-laser",
+    "--time-stop-laser",
     default=None,
-    help="Timestep where laser is turned off",
+    type=float,
+    help="Time where laser is turned off",
 )
 @click.option("--out", default="", help="Filename of spectral data to be saved")
 @click.option(
@@ -22,15 +23,12 @@ from tdqd_tools.io_data import return_time_data, write_data
     default=(None, None),
     help="Limits on x-axis in plot",
 )
-def main(filename, timestep_stop_laser, out, plot, xlim):
+def main(filename, time_stop_laser, out, plot, xlim):
     data = return_time_data(filename)
 
-    stop_laser = slice(None, None)
-
-    if timestep_stop_laser is not None:
-        stop_laser = slice(timestep_stop_laser, None)
-
-    freq, a = get_spectral_lines(data[:, 0], data[:, 1], slice_=stop_laser)
+    freq, a = get_spectral_lines(
+        data[:, 0], data[:, 1], stop_laser=time_stop_laser
+    )
 
     if plot:
         plot_spectral_lines(freq, a, xlim)
