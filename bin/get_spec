@@ -27,11 +27,11 @@ def main(filename, time_stop_laser, out, plot, xlim):
     data = return_time_data(filename)
 
     freq, a = get_spectral_lines(
-        data[:, 0], data[:, 1], stop_laser=time_stop_laser
+        data[:, 0], data[:, 1], stop_laser=time_stop_laser, xlim=xlim
     )
 
     if plot:
-        plot_spectral_lines(freq, a, xlim)
+        plot_spectral_lines(freq, a)
 
     if out:
         write_data(out, freq, a)

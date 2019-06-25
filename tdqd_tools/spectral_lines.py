@@ -3,7 +3,9 @@ import scipy.fftpack
 import matplotlib.pyplot as plt
 
 
-def get_spectral_lines(time_points, dipole_moment, stop_laser=0):
+def get_spectral_lines(
+    time_points, dipole_moment, stop_laser=0, xlim=(None, None)
+):
     mask = time_points >= stop_laser
 
     dt = time_points[1] - time_points[0]
@@ -18,10 +20,14 @@ def get_spectral_lines(time_points, dipole_moment, stop_laser=0):
 
     a /= a.max()
 
-    return freq, a
+    lower_bound = xlim[0] if xlim[0] is not None else np.min(freq)
+    upper_bound = xlim[1] if xlim[1] is not None else np.max(freq)
+
+    mask = (freq >= lower_bound) & (freq <= upper_bound)
+
+    return freq[mask], a[mask]
 
 
-def plot_spectral_lines(freq, a, xlim=(None, None)):
+def plot_spectral_lines(freq, a):
     plt.plot(freq, a)
-    plt.xlim(*xlim)
     plt.show()
