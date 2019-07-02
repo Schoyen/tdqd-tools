@@ -20,6 +20,17 @@ np.save("dipole_data", data) # For pickled-data
 ```
 Note that the command-line tools accept both NumPy-pickled files and raw-text files.
 
+## Plotting data as is
+Given a data set with points as described above, we can plot the two columns by the command-line tool `plot_file`.
+```bash
+plot_file dipole_data.dat
+```
+To plot the `y`-axis on a log-scale the extra argument `--log True` can be added. Furthermore, to only plot data between the limits `(x_start, x_end)` from the first column add `--xlim <x_start> <x_end>`.
+```bash
+plot_file dipole_data.dat --log True --xlim 10 50
+```
+This info can also be fetched by `--help`.
+
 ## Performing spectral analysis of dipole moment
 To extract the spectral lines from the time-dependent dipole moment stored in the data set above, we can use the command-line tool `get_spec`.
 ```bash
