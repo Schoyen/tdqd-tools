@@ -1,0 +1,46 @@
+#!/usr/bin/env python
+
+import click
+import numpy as np
+import matplotlib.pyplot as plt
+from tdqd_tools.io_data import return_time_data, write_data
+
+
+@click.command()
+@click.argument("filename")
+@click.option(
+    "--log",
+    default=False,
+    help="Whether to plot data on semilogy-axis",
+)
+@click.option(
+    "--xlim",
+    type=(float, float),
+    default=(None, None),
+    help="Limits on x-axis in plot",
+)
+@click.option(
+    "--xlim",
+    type=(float, float),
+    default=(None, None),
+    help="Limits on x-axis in plot",
+)
+def main(filename, log, xlim):
+    data = return_time_data(filename)
+
+    lower_bound = xlim[0] if xlim[0] is not None else np.min(data[:, 0])
+    upper_bound = xlim[1] if xlim[1] is not None else np.max(data[:, 0])
+
+    mask = (data[:, 0] >= lower_bound) & (data[:, 0] <= upper_bound)
+
+    if log:
+        plt.semilogy(data[mask, 0], data[mask, 1])
+    else:
+        plt.plot(data[mask, 0], data[mask, 1])
+
+    plt.show()
+
+
+
+if __name__ == "__main__":
+    main()
