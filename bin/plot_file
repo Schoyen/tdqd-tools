@@ -20,12 +20,16 @@ from tdqd_tools.io_data import return_time_data, write_data
     help="Limits on x-axis in plot",
 )
 @click.option(
-    "--xlim",
-    type=(float, float),
-    default=(None, None),
-    help="Limits on x-axis in plot",
+    "--show",
+    default=True,
+    help="Whether to show the plot",
 )
-def main(filename, log, xlim):
+@click.option(
+    "--out",
+    default="",
+    help="Filename of plot when saving"
+)
+def main(filename, log, xlim, show, out):
     data = return_time_data(filename)
 
     lower_bound = xlim[0] if xlim[0] is not None else np.min(data[:, 0])
@@ -38,8 +42,11 @@ def main(filename, log, xlim):
     else:
         plt.plot(data[mask, 0], data[mask, 1])
 
-    plt.show()
+    if out:
+        plt.savefig(out)
 
+    if show:
+        plt.show()
 
 
 if __name__ == "__main__":
