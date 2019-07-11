@@ -42,7 +42,12 @@ def main(file_1, file_2, label_1, label_2, out, plot, log, verbose):
         compare_plot(data_1, data_2, label_1, label_2, log)
 
     if out:
-        write_data(out, data_1[:, 0], np.abs(data_1[:, 1] - data_2[:, 1]))
+        diff = np.abs(data_1[:, 1] - data_2[:, 1])
+
+        if log:
+            diff = np.log(diff)
+
+        write_data(out, data_1[:, 0], diff)
 
 
 if __name__ == "__main__":
