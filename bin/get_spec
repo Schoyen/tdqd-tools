@@ -23,11 +23,17 @@ from tdqd_tools.io_data import return_time_data, write_data
     default=(None, None),
     help="Limits on x-axis in plot",
 )
-def main(filename, time_stop_laser, out, plot, xlim):
+@click.option(
+    "--detrend",
+    type=str,
+    default=(None),
+    help="Remove 'constant' or 'linear' shift in signal",
+)
+def main(filename, time_stop_laser, out, plot, xlim, detrend):
     data = return_time_data(filename)
 
     freq, a = get_spectral_lines(
-        data[:, 0], data[:, 1], stop_laser=time_stop_laser, xlim=xlim
+        data[:, 0], data[:, 1], stop_laser=time_stop_laser, xlim=xlim, detrend=detrend,
     )
 
     if plot:

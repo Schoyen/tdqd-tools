@@ -5,7 +5,7 @@ import matplotlib.pyplot as plt
 
 
 def get_spectral_lines(
-    time_points, dipole_moment, stop_laser=0, xlim=(None, None)
+    time_points, dipole_moment, stop_laser=0, xlim=(None, None), detrend=None
 ):
     mask = time_points >= stop_laser
 
@@ -17,7 +17,14 @@ def get_spectral_lines(
         * np.pi
         / dt
     )
-    dip = scipy.signal.detrend(dipole_moment[mask], type="constant")
+
+    dip = 0
+
+    if detrend:
+        dip = scipy.signal.detrend(dipole_moment[mask], type="constant")
+    else:
+        dip = dipole_moment[mask]
+
     a = np.abs(scipy.fftpack.fftshift(scipy.fftpack.fft(dip)))
 
     a /= a.max()
