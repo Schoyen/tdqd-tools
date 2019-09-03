@@ -1,5 +1,6 @@
 import numpy as np
 import scipy.fftpack
+import scipy.signal
 import matplotlib.pyplot as plt
 
 
@@ -16,7 +17,8 @@ def get_spectral_lines(
         * np.pi
         / dt
     )
-    a = np.abs(scipy.fftpack.fftshift(scipy.fftpack.fft(dipole_moment[mask])))
+    dip = scipy.signal.detrend(dipole_moment[mask], type="constant")
+    a = np.abs(scipy.fftpack.fftshift(scipy.fftpack.fft(dip)))
 
     a /= a.max()
 
